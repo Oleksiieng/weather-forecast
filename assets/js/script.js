@@ -53,16 +53,20 @@ function kelvinToCelsius(temp) {
 function updateCurrentWeather(data) {
     let cityName = data.city.name;
     data = data.list[0];
+    const iconCode = data.weather[0].icon;
+    const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
 
     const weatherSection = document.querySelector('.result-section');
     const formattedDate = dayjs(data.dt_txt).format('DD/MM/YYYY');
     weatherSection.innerHTML = `
         <h2>${cityName} ${formattedDate}</h2>
+        <img src="${iconUrl}" alt="Weather icon">
         <p>Temp: ${kelvinToCelsius(data.main.temp)} °C</p>
         <p>Wind: ${data.wind.speed} KPH</p>
         <p>Humidity: ${data.main.humidity}%</p>
     `;
 }
+
 
 function updateForecast(forecastData) {
     const forecastSection = document.querySelector('.forecast-section .row');
@@ -77,9 +81,13 @@ function updateForecast(forecastData) {
 
     forecastSection.innerHTML = dailyForecast.map(day => {
         const formattedDate = dayjs(day.dt_txt).format('DD/MM/YYYY');
+        const iconCode = day.weather[0].icon;
+        const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
+
         return `
             <div class="col forecast-card text-center p-2">
                 <h5>${formattedDate}</h5>
+                <img src="${iconUrl}" alt="Weather icon">
                 <p>Temp: ${kelvinToCelsius(day.main.temp)} °C</p>
                 <p>Wind: ${day.wind.speed} KPH</p>
                 <p>Humidity: ${day.main.humidity}%</p>
@@ -87,6 +95,7 @@ function updateForecast(forecastData) {
         `;
     }).join('');
 }
+
 
 
 updateCurrentWeather(weatherData[0]);
