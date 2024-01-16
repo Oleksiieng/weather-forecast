@@ -1,6 +1,23 @@
 document.getElementById('search-form').addEventListener('submit', searchCity);
+document.addEventListener('DOMContentLoaded', getLocation);
 
 const apiKey = 'c5c492606c2d753c67314dbe344b9f50';
+
+function getLocation() {
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+
+            const { latitude, longitude } = position.coords;
+            fetchWeatherForecast(latitude, longitude);
+       
+        }, error => {
+            console.error('Geolocation error:', error);
+        });
+    } else {
+        console.log('Geolocation is not supported by this browser.');
+    }
+}
+
 
 function fetchWeatherForecast(lat, lon) {
     const forecastApiUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
@@ -16,6 +33,7 @@ function fetchWeatherForecast(lat, lon) {
             console.error('Error fetching weather forecast:', error);
         });
 }
+
 
 function getCoordinatesForCity(cityName) {
     const geocodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`;
@@ -35,6 +53,7 @@ function getCoordinatesForCity(cityName) {
         });
 }
 
+
 function searchCity(event) {
     event.preventDefault();
     let cityInput = document.getElementById('search-input');
@@ -42,13 +61,6 @@ function searchCity(event) {
     getCoordinatesForCity(cityName);
 }
 
-function kelvinToCelsius(temp) {
-    let celsius = temp - 273.15;
-    if (celsius === 0) {
-        return 0;
-    }
-    return celsius.toFixed(0);
-}
 
 function updateCurrentWeather(data) {
     let cityName = data.city.name;
@@ -97,6 +109,10 @@ function updateForecast(forecastData) {
 }
 
 
-
-updateCurrentWeather(weatherData[0]);
-updateForecast(weatherData);
+function kelvinToCelsius(temp) {
+    let celsius = temp - 273.15;
+    if (celsius === 0) {
+        return 0;
+    }
+    return celsius.toFixed(0);
+}
