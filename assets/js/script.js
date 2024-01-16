@@ -1,5 +1,9 @@
 document.getElementById('search-form').addEventListener('submit', searchCity);
-document.addEventListener('DOMContentLoaded', getLocation);
+document.addEventListener('DOMContentLoaded', () => {
+    getLocation();
+    updateSearchHistoryDisplay();
+    
+});
 
 const apiKey = 'c5c492606c2d753c67314dbe344b9f50';
 
@@ -57,8 +61,11 @@ function getCoordinatesForCity(cityName) {
 function searchCity(event) {
     event.preventDefault();
     let cityInput = document.getElementById('search-input');
-    let cityName = cityInput.value;
-    getCoordinatesForCity(cityName);
+    let cityName = cityInput.value.trim();
+    if (cityName) {
+        getCoordinatesForCity(cityName);
+        saveSearchHistory(cityName);
+    }
 }
 
 
@@ -115,4 +122,30 @@ function kelvinToCelsius(temp) {
         return 0;
     }
     return celsius.toFixed(0);
+}
+
+function updateSearchHistoryDisplay() {
+    let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    const searchHistoryDiv = document.querySelector('.search-history .list-group');
+
+    searchHistoryDiv.innerHTML = searchHistory.map(city => 
+        `<a href="#" class="list-group-item list-group-item-action" onclick="searchHistoryClicked('${city}')">${city}</a>`
+    ).join('');
+}
+
+function searchHistoryClicked(cityName) {
+    document.getElementById('search-input').value = cityName;
+    getCoordinatesForCity(cityName);
+}
+
+
+function saveSearchHistory(cityName) {
+    let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    
+    if (!searchHistory.includes(cityName)) {
+        searchHistory.push(cityName);
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    }
+
+    updateSearchHistoryDisplay();
 }
