@@ -24,7 +24,7 @@ function getLocation() {
 
 
 function fetchWeatherForecast(lat, lon) {
-    const forecastApiUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+    const forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
     fetch(forecastApiUrl)
         .then(response => response.json())
@@ -73,7 +73,7 @@ function updateCurrentWeather(data) {
     let cityName = data.city.name;
     data = data.list[0];
     const iconCode = data.weather[0].icon;
-    const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
+    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
 
     const weatherSection = document.querySelector('.result-section');
     const formattedDate = dayjs(data.dt_txt).format('DD/MM/YYYY');
@@ -101,7 +101,7 @@ function updateForecast(forecastData) {
     forecastSection.innerHTML = dailyForecast.map(day => {
         const formattedDate = dayjs(day.dt_txt).format('DD/MM/YYYY');
         const iconCode = day.weather[0].icon;
-        const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
 
         return `
             <div class="col forecast-card text-center p-2">
