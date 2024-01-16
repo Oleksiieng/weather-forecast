@@ -1,7 +1,9 @@
-const apiKey = 'c5c492606c2d753c67314dbe344b9f50';
+document.getElementById('search-form').addEventListener('submit', searchCity);
 
+const apiKey = 'c5c492606c2d753c67314dbe344b9f50';
 const city = 'London';
 
+// API
 function fetchWeatherForecast(lat, lon) {
     const forecastApiUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
@@ -14,7 +16,6 @@ function fetchWeatherForecast(lat, lon) {
             console.error('Error fetching weather forecast:', error);
         });
 }
-
 
 function getCoordinatesForCity(cityName) {
     const geocodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`;
@@ -36,5 +37,11 @@ function getCoordinatesForCity(cityName) {
         });
 }
 
+function searchCity(event) {
+    event.preventDefault();
 
-getCoordinatesForCity(city);
+    let cityInput = document.getElementById('search-input');
+    let cityName = cityInput.value;
+    console.log(cityName);
+
+}
