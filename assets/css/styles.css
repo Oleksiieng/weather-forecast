@@ -1,0 +1,33 @@
+body {
+    background-color: #e9ecef;
+}
+
+.weather-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.search-section,
+.result-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.search-history .list-group-item {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.search-history .list-group-item:hover {
+    background-color: #5a6268;
+}
+
+.forecast-card {
+    background-color: #007bff;
+    color: white;
+    margin: 2px;
+    border-radius: 5px;
+}
