@@ -1,7 +1,6 @@
 document.getElementById('search-form').addEventListener('submit', searchCity);
 
 const apiKey = 'c5c492606c2d753c67314dbe344b9f50';
-const city = 'London';
 
 // API
 function fetchWeatherForecast(lat, lon) {
@@ -11,6 +10,7 @@ function fetchWeatherForecast(lat, lon) {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            localStorage.setItem('weatherForecast', JSON.stringify(data));
         })
         .catch(error => {
             console.error('Error fetching weather forecast:', error);
@@ -42,6 +42,7 @@ function searchCity(event) {
 
     let cityInput = document.getElementById('search-input');
     let cityName = cityInput.value;
-    console.log(cityName);
+
+    getCoordinatesForCity(cityName);
 
 }
