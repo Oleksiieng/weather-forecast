@@ -1,7 +1,5 @@
 # weather-forecast
 
-# Unit 4 Challenge: Password generator form
-
 ## Description
 
 This program is a weather dashboard with form inputs.
